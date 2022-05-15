@@ -1,6 +1,9 @@
 package com.app.Team_Service.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,16 +18,26 @@ public class TeamController {
 	private TeamService teamService;
 	
 	@PostMapping("/createTeam")
-	public Team saveTeam(@RequestBody Team team) throws Exception
+	public String saveTeam(@RequestBody Team team) throws Exception
 	{
 		Team teamObj=teamService.fetchTeamByName(team.getTeamName());
 		if(teamObj!=null)
 		{
 			throw new Exception("Team Name already exist");
 		}
-		
-		return teamService.saveTeam(team);
+		else
+		{
+			teamService.saveTeam(team);
+		}
+		return "Successfully creted with name "+team.getTeamName();
 	}
+	
+	@GetMapping("/teamName")
+	public List<String> teamNames()
+	{
+		return teamService.allTeamName();
+	}
+	
 	
 
 }

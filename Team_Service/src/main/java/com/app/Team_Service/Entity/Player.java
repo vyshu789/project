@@ -9,7 +9,7 @@ import javax.persistence.Id;
 public class Player {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private int playerId;
 	private String playerName;
 	private int playerBiddingBudget;

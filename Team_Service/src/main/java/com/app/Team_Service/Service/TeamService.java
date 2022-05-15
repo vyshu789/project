@@ -1,5 +1,7 @@
 package com.app.Team_Service.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,10 @@ public class TeamService {
 		return teamRepo.findByTeamName(teamName);
 	}
 	
+	public List<String> allTeamName()
+	{
+		return teamRepo.TeamNames();
+	}
 
+	
 }

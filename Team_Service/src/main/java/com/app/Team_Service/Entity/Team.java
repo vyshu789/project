@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 public class Team {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private int team_id;
 	private String teamName;
 	private int teamMaxBudget;

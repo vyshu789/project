@@ -1,5 +1,7 @@
 package com.app.Team_Service.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,24 +20,21 @@ public class PlayerService {
 	}
 	
 	public Integer sumOfPlayerBiddingBudget(String teamName)
-	
 	{
-//		int value=playerRepo.sumOfBiddingBudget(teamName);
-//		if(value==0)
-//		{
-//			return 0;
-//		}
-		
 		
 		return playerRepo.sumOfBiddingBudget(teamName);
 		
 	}
 	
-	public Player FetchPlayerByTeamNaem(String TeamName)
+	public List<Player> FetchPlayerByTeamName(String TeamName)
 	{
 		return playerRepo.findByPlayerTeamName(TeamName);
 	}
 	
+	public Player playerDetails(String playerName)
+	{
+		return playerRepo.findByPlayerName(playerName);
+	}
 	
 	
 

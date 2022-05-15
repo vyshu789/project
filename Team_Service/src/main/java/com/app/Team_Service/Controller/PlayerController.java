@@ -1,6 +1,10 @@
 package com.app.Team_Service.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,24 +27,53 @@ public class PlayerController {
 	public Player createPlayer(@RequestBody Player player) throws Exception
 	
 	{ 
-	Team teamObj=teamService.fetchTeamByName(player.getPlayerTeamName());
-	Player playerObj=playerService.FetchPlayerByTeamNaem(player.getPlayerTeamName());
+		Team teamObj=teamService.fetchTeamByName(player.getPlayerTeamName());
+		List<Player> playerObj=playerService.FetchPlayerByTeamName(player.getPlayerTeamName());
 	
-		if(playerObj==null)
+		if(playerObj.isEmpty() && teamObj!=null)
 		{
+			if(player.getPlayerBiddingBudget()<=teamObj.getTeamMaxBudget())
+			{
 			return playerService.createPlayer(player);
+			}
+			
+			else if(player.getPlayerBiddingBudget()>teamObj.getTeamMaxBudget())
+			{
+				throw new Exception("Player can't be tagged to this team as it's exceeds team's budget");
+			}
 		}
-		else if(playerObj!=null)
+		else if(playerObj!=null && teamObj!=null)
 		{
-			int value=playerService.sumOfPlayerBiddingBudget(player.getPlayerTeamName());
-		if(value>=teamObj.getTeamMaxBudget())
+			int value=playerService.sumOfPlayerBiddingBudget(player.getPlayerTeamName())+player.getPlayerBiddingBudget();
+			System.out.println(value);
+			if(value>teamObj.getTeamMaxBudget() )
+			{
+				throw new Exception("Player can't be tagged to this team as it's exceeds team's budget");
+			}
+			else
+			{
+				return playerService.createPlayer(player);
+			}
+		}
+		else if(teamObj==null)
 		{
-			throw new Exception("Max budget exceeds");
+			throw new Exception("Team does not exist");
 		}
-		}
-	
-	
-		return playerService.createPlayer(player);
+		return player;
 	}
-
+	//Question3
+	@GetMapping("players/{teamName}")
+	public List<Player> fetchPlayers(@PathVariable String teamName)
+	{
+		return playerService.FetchPlayerByTeamName(teamName);
+	}
+	
+	@GetMapping("playerDetails/{playerName}")
+	public Player fetchPlayer(@PathVariable String playerName)
+	{
+		return playerService.playerDetails(playerName);
+	}
+	
+	
+	
 }
