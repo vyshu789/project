@@ -3,6 +3,7 @@ package com.app.Team_Service.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,8 +18,9 @@ public class TeamController {
 	@Autowired
 	private TeamService teamService;
 	
+	@CrossOrigin(origins="http://localhost:4200")
 	@PostMapping("/createTeam")
-	public String saveTeam(@RequestBody Team team) throws Exception
+	public Team saveTeam(@RequestBody Team team) throws Exception
 	{
 		Team teamObj=teamService.fetchTeamByName(team.getTeamName());
 		if(teamObj!=null)
@@ -29,9 +31,10 @@ public class TeamController {
 		{
 			teamService.saveTeam(team);
 		}
-		return "Successfully creted with name "+team.getTeamName();
+		return team;
 	}
 	
+	@CrossOrigin(origins="http://localhost:4200")
 	@GetMapping("/teamName")
 	public List<String> teamNames()
 	{

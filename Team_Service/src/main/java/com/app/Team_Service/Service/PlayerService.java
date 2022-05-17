@@ -31,7 +31,7 @@ public class PlayerService {
 		return playerRepo.findByPlayerTeamName(TeamName);
 	}
 	
-	public Player playerDetails(String playerName)
+	public List<Player> playerDetails(String playerName)
 	{
 		return playerRepo.findByPlayerName(playerName);
 	}
