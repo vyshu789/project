@@ -13,7 +13,6 @@ public interface PlayerRepository extends JpaRepository<Player,Integer> {
 	public Integer sumOfBiddingBudget(String teamName);
 	
 	
-	
 	public List<Player> findByPlayerTeamName(String teamName);
 	
 	public List<Player> findByPlayerName(String playerName);

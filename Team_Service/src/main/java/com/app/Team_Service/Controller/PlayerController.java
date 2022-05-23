@@ -69,6 +69,7 @@ public class PlayerController {
 		return player;
 	}
 	//Question3
+	@CrossOrigin(origins="http://localhost:4200")
 	@GetMapping("players/{teamName}")
 	public List<Player> fetchPlayers(@PathVariable String teamName)
 	{
@@ -76,9 +77,17 @@ public class PlayerController {
 	}
 	@CrossOrigin(origins="http://localhost:4200")
 	@GetMapping("playerDetails/{playerName}")
-	public List<Player> fetchPlayer(@PathVariable String playerName)
+	public List<Player> fetchPlayer(@PathVariable String playerName) throws Exception
 	{
-		return playerService.playerDetails(playerName);
+		if(playerService.playerDetails(playerName).isEmpty())
+		{
+			throw new Exception("playerNot Exixt");
+			
+		}
+		else {
+			return playerService.playerDetails(playerName);
+			
+		}
 	}
 	
 	
